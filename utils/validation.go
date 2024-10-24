@@ -14,7 +14,7 @@ type ErrorMsg struct {
 }
 
 func ValidateRequest(c *gin.Context, input interface{}) error {
-	if err := c.ShouldBindJSON(input); err != nil {
+	if err := c.ShouldBind(input); err != nil {
 		var ve validator.ValidationErrors
 		if errors.As(err, &ve) {
 			out := make([]ErrorMsg, len(ve))

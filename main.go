@@ -10,10 +10,10 @@ import (
 
 func main() {
 	models.ConnectDatabase()
-	r := gin.Default()
-	routes.RegisterRoutes(r)
+	app := gin.Default()
+	routes.RegisterRoutes(app)
 
-	if err := r.Run(":5000"); err != nil {
+	if err := app.Run(":5000"); err != nil {
 		log.Fatal("Failed to start server:", err)
 	}
 }

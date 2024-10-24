@@ -8,3 +8,4 @@ db:
   loc: Local
 jwt:
   secret: my-secret-key
+  expired: 10 #hourly

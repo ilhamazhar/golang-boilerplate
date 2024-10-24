@@ -9,8 +9,8 @@ import (
 )
 
 type PostInput struct {
-	Title   string `json:"title" binding:"required"`
-	Content string `json:"content" binding:"required"`
+	Title   string `json:"title" binding:"required" form:"title"`
+	Content string `json:"content" binding:"required" form:"content"`
 }
 
 func CreatePost(c *gin.Context) {
