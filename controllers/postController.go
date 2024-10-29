@@ -13,6 +13,17 @@ type PostInput struct {
 	Content string `json:"content" binding:"required" form:"content"`
 }
 
+// @Summary Create Post
+// @Description Create a new post
+// @Tags Posts
+// @Security BearerAuth
+// @Accept application/x-www-form-urlencoded
+// @Produce json
+// @Param title formData string true " "
+// @Param content formData string true " "
+// @Success 201 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Router /api/posts [post]
 func CreatePost(c *gin.Context) {
 	var input PostInput
 
@@ -33,6 +44,14 @@ func CreatePost(c *gin.Context) {
 	utils.JSONResponse(c, http.StatusCreated, "Post created successfully", post)
 }
 
+// @Summary Get Posts
+// @Description Get post profile data
+// @Tags Posts
+// @Security BearerAuth
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Failure 401 {object} map[string]string
+// @Router /api/posts [get]
 func GetPosts(c *gin.Context) {
 	var posts []models.Post
 
@@ -44,6 +63,15 @@ func GetPosts(c *gin.Context) {
 	utils.JSONResponse(c, http.StatusOK, "List of Posts", posts)
 }
 
+// @Summary Get post by ID
+// @Description Get details of a post by ID
+// @Tags Posts
+// @Security BearerAuth
+// @Produce json
+// @Param id path int true " "
+// @Success 200 {object} models.Post
+// @Failure 404 {object} map[string]string
+// @Router /api/posts/{id} [get]
 func GetPostById(c *gin.Context) {
 	var post models.Post
 
@@ -55,6 +83,18 @@ func GetPostById(c *gin.Context) {
 	utils.JSONResponse(c, http.StatusOK, "Post details", post)
 }
 
+// @Summary Update post by ID
+// @Description Update post data by ID
+// @Tags Posts
+// @Security BearerAuth
+// @Accept application/x-www-form-urlencoded
+// @Produce json
+// @Param id path int true " "
+// @Param title formData string false " "
+// @Param content formData string false " "
+// @Success 200 {object} models.Post
+// @Failure 404 {object} map[string]string
+// @Router /api/posts/{id} [put]
 func UpdatePostById(c *gin.Context) {
 	var post models.Post
 
@@ -76,6 +116,15 @@ func UpdatePostById(c *gin.Context) {
 	utils.JSONResponse(c, http.StatusOK, "Post updated successfully", post)
 }
 
+// @Summary Delete post by ID
+// @Description Delete post data by ID
+// @Tags Posts
+// @Security BearerAuth
+// @Produce json
+// @Param id path int true " "
+// @Success 200 {object} models.Post
+// @Failure 404 {object} map[string]string
+// @Router /api/posts/{id} [delete]
 func DeletePostById(c *gin.Context) {
 	var post models.Post
 	if err := models.DB.First(&post, c.Param("id")).Error; err != nil {

@@ -8,8 +8,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Title Golang App
+// @Version 1.0
+// @Description This is loreme seipsume.
+// @SecurityDefinitions.apikey BearerAuth
+// @In header
+// @Name Authorization
 func main() {
 	models.ConnectDatabase()
+
 	app := gin.Default()
 	routes.RegisterRoutes(app)
 

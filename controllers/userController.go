@@ -8,6 +8,14 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// @Summary Get Users
+// @Description Get user profile data
+// @Tags Users
+// @Security BearerAuth
+// @Produce json
+// @Success 200 {object} map[string]interface{}
+// @Failure 401 {object} map[string]string
+// @Router /api/users [get]
 func GetUsers(c *gin.Context) {
 	var users []models.User
 
@@ -19,6 +27,15 @@ func GetUsers(c *gin.Context) {
 	utils.JSONResponse(c, http.StatusOK, "List of Users", users)
 }
 
+// @Summary Get user by ID
+// @Description Get details of a user by ID
+// @Tags Users
+// @Security BearerAuth
+// @Produce json
+// @Param id path int true " "
+// @Success 200 {object} models.User
+// @Failure 404 {object} map[string]string
+// @Router /api/users/{id} [get]
 func GetUserById(c *gin.Context) {
 	var user models.User
 
@@ -30,6 +47,18 @@ func GetUserById(c *gin.Context) {
 	utils.JSONResponse(c, http.StatusOK, "User details", user)
 }
 
+// @Summary Update user by ID
+// @Description Update user data by ID
+// @Tags Users
+// @Security BearerAuth
+// @Accept application/x-www-form-urlencoded
+// @Produce json
+// @Param id path int true " "
+// @Param name formData string false " "
+// @Param email formData string false " "
+// @Success 200 {object} models.User
+// @Failure 404 {object} map[string]string
+// @Router /api/users/{id} [put]
 func UpdateUserById(c *gin.Context) {
 	var user models.User
 
@@ -50,6 +79,15 @@ func UpdateUserById(c *gin.Context) {
 	utils.JSONResponse(c, http.StatusOK, "User updated successfully", user)
 }
 
+// @Summary Delete user by ID
+// @Description Delete user data by ID
+// @Tags Users
+// @Security BearerAuth
+// @Produce json
+// @Param id path int true " "
+// @Success 200 {object} models.User
+// @Failure 404 {object} map[string]string
+// @Router /api/users/{id} [delete]
 func DeleteUserById(c *gin.Context) {
 	var user models.User
 	if err := models.DB.First(&user, c.Param("id")).Error; err != nil {

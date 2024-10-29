@@ -14,6 +14,17 @@ func HashPassword(password string) (string, error) {
 	return string(bytes), err
 }
 
+// @Summary Register User
+// @Description Register a new user
+// @Tags Public
+// @Accept application/x-www-form-urlencoded
+// @Produce json
+// @Param name formData string true " "
+// @Param email formData string true " "
+// @Param password formData string true " "
+// @Success 201 {object} map[string]interface{}
+// @Failure 400 {object} map[string]string
+// @Router /api/public/register [post]
 func Register(c *gin.Context) {
 	var input models.User
 
@@ -44,10 +55,21 @@ func Register(c *gin.Context) {
 }
 
 type LoginInput struct {
-	Email    string `json:"email" binding:"required,email"`
-	Password string `json:"password" binding:"required,min=6"`
+	Email    string `json:"email" form:"email" binding:"required,email"`
+	Password string `json:"password" form:"password" binding:"required,min=6"`
 }
 
+// @Summary Login
+// @Description Login to obtain an access token
+// @Tags Public
+// @Accept application/x-www-form-urlencoded
+// @Produce json
+// @Param email formData string true " "
+// @Param password formData string true " "
+// @Success 200 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 400 {object} map[string]string
+// @Router /api/public/login [post]
 func Login(c *gin.Context) {
 	var input LoginInput
 	if err := utils.ValidateRequest(c, &input); err != nil {
